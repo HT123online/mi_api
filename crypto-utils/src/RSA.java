@@ -1,37 +1,45 @@
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
+import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
-import java.security.*;
+
 
 public class RSA {
-    private static KeyPair keyPair;
-
-    static {
-        try {
-
-            KeyPairGenerator generador =
-                    KeyPairGenerator.getInstance("RSA");
-
-            generador.initialize(2048);
-
-            keyPair =
-                    generador.generateKeyPair();
-
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+    
+    private PrivateKey clavePrivada;
+    private PublicKey clavePublica;
+    
+    public RSA() throws Exception {
+    
+        byte[] privateBytes =
+                Files.readAllBytes(
+                        Paths.get("crypto-utils/src/private.key")
+                );
+    
+        byte[] publicBytes =
+                Files.readAllBytes(
+                        Paths.get("crypto-utils/src/public.key")
+                );
+    
+        KeyFactory factory =
+                KeyFactory.getInstance("RSA");
+    
+        clavePrivada =
+                factory.generatePrivate(
+                        new PKCS8EncodedKeySpec(privateBytes)
+                );
+    
+        clavePublica =
+                factory.generatePublic(
+                        new X509EncodedKeySpec(publicBytes)
+                );
     }
 
-    private PrivateKey clavePrivada =
-            keyPair.getPrivate();
-
-    private PublicKey clavePublica =
-            keyPair.getPublic();
-    
-    
     //Metodo firmar
     public String firmar(String payload) throws Exception{
         Signature firma = Signature.getInstance("SHA256withRSA");
@@ -63,5 +71,5 @@ public class RSA {
         );
         
     }
-    
+
 }

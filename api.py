@@ -5,6 +5,8 @@ import uuid
 import subprocess
 from io import BytesIO
 from flasgger import Swagger
+import os
+print("DIRECTORIO ACTUAL:", os.getcwd())
 
 
 app=Flask(__name__)
@@ -59,7 +61,7 @@ def pross(monto,ref):
     idQR = str(uuid.uuid4())
     payload = f"{idQR}|{monto}|{ref}"
     firma = firmarPayload(payload)
-
+    print("FIRMA GENERADA:", repr(firma))
     nuevo_qr = {
         "idQR": idQR,
         "monto": monto,
@@ -77,6 +79,25 @@ def pross(monto,ref):
 def procesar_pago(idQR):
 
     qr = buscarQr(idQR)
+    payload = f"{qr['idQR']}|{qr['monto']}|{qr['referencia']}"
+
+    firma = qr["firma"]
+
+    firmaValida = verificarFirma(
+        payload,
+        firma
+    )
+    
+    print("PAYLOAD:", payload)
+
+    print("FIRMA:", firma)
+
+    print("RESULTADO VERIFICACION:", firmaValida)
+    print("VALOR REAL:", repr(firmaValida))
+    if firmaValida.strip().lower() != "true":
+        return jsonify({
+        "estado": "FIRMA INVALIDA"
+    })
 
     if qr is None:
         return jsonify({
@@ -104,9 +125,38 @@ def firmarPayload(payload):
             "FirmaQR",
             payload
         ],
+        # cwd="crypto-utils/src",
         capture_output=True,
         text=True
     )
+    print("FIRMA STDOUT:", repr(resultado.stdout))
+    print("FIRMA STDERR:", repr(resultado.stderr))
+    return resultado.stdout.strip()
+
+def verificarFirma(payload, firma):
+    import os
+
+    print("JAVA EXISTS:",
+        os.path.exists("VerificarQR.class"))
+
+    print("PWD:",
+        os.getcwd())
+    resultado = subprocess.run(
+        [
+            "java",
+            "-cp",
+            "crypto-utils/src",
+            "VerificarQR",
+            payload,
+            firma
+        ],
+        # cwd="crypto-utils/src",
+        capture_output=True,
+        text=True
+    )
+    print("RETURNCODE:", resultado.returncode)
+    print("STDOUT:", repr(resultado.stdout))
+    print("STDERR:", repr(resultado.stderr))
 
     return resultado.stdout.strip()
 
@@ -166,7 +216,6 @@ def verReplayAttack(idQR): #cambio n4
     return qr["usado"]
 
 def procesarPago(idQR): #cambio n4
-
     if verReplayAttack(idQR):
         return "Replay Attack"
 
