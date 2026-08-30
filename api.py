@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory,jsonify,request,send_file
 import qrcode
 import json #cambio n1
 import uuid
+import subprocess
 from io import BytesIO
 from flasgger import Swagger
 
@@ -26,7 +27,6 @@ def generaQR(texto,temporal):
                      mimetype='image/png')
 
 @app.route("/generar_qr/<monto>/<ref>",methods=["POST"])
-
 def pross(monto,ref):
     """
     Generar QR con monto y referencia
@@ -53,11 +53,62 @@ def pross(monto,ref):
               type: string
               format: binary
     """
-    data={'monto':monto,
-          'compradas':ref}
-    return jsonify(data)
+    # data={'monto':monto,
+    #       'compradas':ref}
+    # return jsonify(data)
+    idQR = str(uuid.uuid4())
+    payload = f"{idQR}|{monto}|{ref}"
+    firma = firmarPayload(payload)
 
+    nuevo_qr = {
+        "idQR": idQR,
+        "monto": monto,
+        "referencia": ref,
+        "expiracion": "2026-08-30",
+        "usado": False,
+        "firma": firma
+    }
+ 
+    guardarQr(nuevo_qr)
+ 
+    return jsonify(nuevo_qr)
 
+@app.route("/procesar_pago/<idQR>")
+def procesar_pago(idQR):
+
+    qr = buscarQr(idQR)
+
+    if qr is None:
+        return jsonify({
+            "estado":"QR NO EXISTE"
+        })
+
+    if verReplayAttack(idQR):
+        return jsonify({
+            "estado":"REPLAY ATTACK"
+        })
+
+    marUsado(idQR)
+
+    return jsonify({
+            "estado":"PAGO ACEPTADO"
+    })
+
+def firmarPayload(payload):
+
+    resultado = subprocess.run(
+        [
+            "java",
+            "-cp",
+            "crypto-utils/src",
+            "FirmaQR",
+            payload
+        ],
+        capture_output=True,
+        text=True
+    )
+
+    return resultado.stdout.strip()
 
 def guardarQr(nuevo_qr): #cambio n2
     with open("qr_data.json", "r") as archivo:
@@ -105,7 +156,6 @@ def marUsado(idQR): #cambio n3
             return True
 
     return False
-qr = buscarQr("QR123")
 
 def verReplayAttack(idQR): #cambio n4
     qr = buscarQr(idQR)
@@ -128,12 +178,13 @@ def procesarPago(idQR): #cambio n4
 if __name__=="__main__":
     app.run(debug=True)
 
-guardarQr({
-    "idQR": "QR666",
-    "monto": 40,
-    "referencia": "hamburguesa",
-    "expiracion": "2026-08-30",
-    "usado": False
-})
-print(procesarPago("QR992"))
-print(procesarPago("QR992"))
+#Prueba de metodos guardar y repeticion
+# guardarQr({
+#     "idQR": "QR666",
+#     "monto": 40,
+#     "referencia": "hamburguesa",
+#     "expiracion": "2026-08-30",
+#     "usado": False
+# })
+# print(procesarPago("QR992"))
+# print(procesarPago("QR992"))

@@ -1,18 +1,49 @@
 {
     "qrs": [
         {
-            "idQR": "QR992",
-            "monto": 40,
+            "idQR": "e163aa10-946c-4a56-b3f4-22f1bcb5f837",
+            "monto": "40",
             "referencia": "hamburguesa",
+            "expiracion": "2026-08-30",
+            "usado": false
+        },
+        {
+            "idQR": "3b889e56-02a0-4f5b-aeee-3c823b4dbe74",
+            "monto": "40",
+            "referencia": "pizza",
+            "expiracion": "2026-08-30",
+            "usado": false
+        },
+        {
+            "idQR": "27b15648-f513-49d8-83f5-8280f09d2699",
+            "monto": "50",
+            "referencia": "pepsi",
             "expiracion": "2026-08-30",
             "usado": true
         },
         {
-            "idQR": "QR666",
-            "monto": 40,
-            "referencia": "hamburguesa",
+            "idQR": "606a37af-625d-424d-8e98-9c0e6591de27",
+            "monto": "700",
+            "referencia": "pizza",
             "expiracion": "2026-08-30",
-            "usado": false
+            "usado": false,
+            "firma": "lB6pJ1UePw/TYCyVmnkRprTrYBlaZzOYJMLKRYj80P6upJfdL8lcH44Aui+rDbL6eMdqfWp3X1Pu2juiPcPg09sMgZ5nDYEf9AMoa/RoNOymtq67WGRwwuGIBiZ9trynMhAa6XeRgM8BRifqasdQw/sr9grLtLTISfDvijxdhOvdSbKoafZxcP5vHc5e3wEgXNCs0eQDvW4kTnmIMXGMRF/OLXfjB0JWpHib0OT8naeXSbbnT5NuxPTT1moU0xeoYNdeRXmoyTrgJMoNcACbAaldVPq/MfhK0IQ4K5TnSnWouTD8qwOFvjsdaZL+i4Jhd7mXiiSrw1gNhWzdeNHn+Q=="
+        },
+        {
+            "idQR": "ba9a19ea-d464-4410-8230-5954b4c07948",
+            "monto": "50",
+            "referencia": "pan",
+            "expiracion": "2026-08-30",
+            "usado": false,
+            "firma": "UmYp2SxdWHjxyTdXYUE6JGHYpzYE1JewWxhr1nzqLKRU3p+rcsLnAEYSm92FA1FiBoYt11+GbuX+gsYaYtSZKSVTYqEJaJTyzt7YQaDTbO+66GkhU6p47AizWAX4pvZQe1+lr1zmJu/kO3mGB6GWZvPxAsJREzVNb1qCqfnsF7OmtWQGricxwz6CPbsIqB9JzzgBbUpjJ3RSgKvPJPs4JK1TbsQQXhOuA5Q9MR+CJ0rJhFs51w/5zW2SdIg8jEZCCufn4nIEMF59qmpwuhaIbMej6PPcss4phsMdR7rg8q653o/NYo7iGWeep/fYFUPKleXFBqXbrZ/zPSmkhSNbxQ=="
+        },
+        {
+            "idQR": "5575c0b7-048e-41f4-adea-b3c524b9d1fa",
+            "monto": "6000",
+            "referencia": "pizza",
+            "expiracion": "2026-08-30",
+            "usado": true,
+            "firma": "10hEyBdpVvTRfb5MdV3hwk+QTJp1BOaz5fPktZH0QOQ3b/c5f1/xfI0d5RZyawXg8V8fe+qYBIpKUBp/qu763TbyBZBgUn5Z5/XWchm4JJzbXuQ7yC0FvhhvW21UWmqdlm0aZRr0Q8oFwvUel5L04TFbcHXi1KRsNA5CLG9a62eiw3m33iLjYHS+yCsnA260jHKxPlzL/0kKrJSiogG1hUWQL9ZpHw6j1+4Qml/sAlr9rjc3N/qkb0X3ImF1NSeWb11and1Nw38GiM/qjKGfk46SYdmUkvcQLQEhugPrOwFr3pP3MvBb3td1Zi+/u1qFYBldX9Njz7CDp+VFR3A0vw=="
         }
     ]
 }

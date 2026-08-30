@@ -4,22 +4,33 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.security.*;
 
 public class RSA {
-    private PrivateKey clavePrivada;
-    private PublicKey clavePublica;
-    
-    public RSA() throws Exception{
-        KeyPairGenerator generador =KeyPairGenerator.getInstance("RSA");
+    private static KeyPair keyPair;
 
-        generador.initialize(2048);
+    static {
+        try {
 
-        KeyPair par = generador.generateKeyPair(); //creamos tanto public key como private key
+            KeyPairGenerator generador =
+                    KeyPairGenerator.getInstance("RSA");
 
-        clavePrivada = par.getPrivate(); //Se extrae y se guarda la Clave Privada
-        clavePublica = par.getPublic(); // Se extrae y se guarda la Clave Publica
-        
+            generador.initialize(2048);
+
+            keyPair =
+                    generador.generateKeyPair();
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
+
+    private PrivateKey clavePrivada =
+            keyPair.getPrivate();
+
+    private PublicKey clavePublica =
+            keyPair.getPublic();
+    
     
     //Metodo firmar
     public String firmar(String payload) throws Exception{
