@@ -128,12 +128,12 @@ def procesarPago(idQR): #cambio n4
 if __name__=="__main__":
     app.run(debug=True)
 
-# guardarQr({
-#     "idQR": "QR666",
-#     "monto": 40,
-#     "referencia": "hamburguesa",
-#     "expiracion": "2026-08-30",
-#     "usado": False
-# })
-# print(procesarPago("QR992"))
-# print(procesarPago("QR992"))
+guardarQr({
+    "idQR": "QR666",
+    "monto": 40,
+    "referencia": "hamburguesa",
+    "expiracion": "2026-08-30",
+    "usado": False
+})
+print(procesarPago("QR992"))
+print(procesarPago("QR992"))
