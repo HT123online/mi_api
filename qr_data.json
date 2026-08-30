@@ -1,0 +1,18 @@
+{
+    "qrs": [
+        {
+            "idQR": "QR992",
+            "monto": 40,
+            "referencia": "hamburguesa",
+            "expiracion": "2026-08-30",
+            "usado": true
+        },
+        {
+            "idQR": "QR666",
+            "monto": 40,
+            "referencia": "hamburguesa",
+            "expiracion": "2026-08-30",
+            "usado": false
+        }
+    ]
+}
