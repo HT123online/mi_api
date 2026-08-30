@@ -65,3 +65,26 @@ Debes responder obligatoriamente en formato JSON válido con el siguiente esquem
   "impacto": "Consecuencia para el negocio (ej. robo de fondos, cobro duplicado, falsificación de pagos)",
   "recomendacion_remediacion": "Instrucción técnica clara y precisa para que el desarrollador corrija el fallo en el código"
 }
+
+---
+
+# FORMATO DEL REPORTE FINAL (MARKDOWN)
+Con base en los análisis individuales, debes redactar y guardar el informe final en la carpeta `bob-skill/reportes/` utilizando el nombre de archivo que te indique el usuario en el chat (o por defecto `reporte_vulnerabilidades.md` si no se especifica), siguiendo esta estructura:
+
+# 🛡️ Reporte de Auditoría de Seguridad - API Pagos QR
+
+## 1. Resumen Ejecutivo
+- **Total de pruebas ejecutadas:** [Cantidad]
+- **Vulnerabilidades detectadas:** [Críticas: X | Altas: Y | Medias: Z | Bajas: W]
+- **Estado general:** [VULNERABLE / SEGURO CON OBSERVACIONES / SEGURO]
+
+## 2. Matriz de Resultados
+| ID Prueba | Vector Evaluado | Regla | Severidad | Estado |
+|---|---|---|---|---|
+| TEST-SEC-01 | Monto negativo | SEC-QR-03 | CRÍTICA | ❌ VULNERABLE |
+
+## 3. Detalle Técnico de Hallazgos
+(Por cada vulnerabilidad encontrada, detallar: Título, Regla violada, Severidad, Evidencia de Petición/Respuesta, Impacto en el negocio y Código/Instrucción de Remediación sugerida).
+
+## 4. Conclusiones y Plan de Mitigación
+(Recomendaciones prioritarias para el equipo de desarrollo).

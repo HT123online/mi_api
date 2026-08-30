@@ -107,12 +107,20 @@ def ejecutar_pruebas():
         }
         evidencias.append(evidencia)
 
-    # Guardar evidencias en disco para alimentar a Bob AI
-    archivo_evidencias = "evidencias.json"
+    # Determinar la ruta absoluta hacia la carpeta 'reportes'
+    directorio_actual = os.path.dirname(os.path.abspath(__file__))
+    carpeta_reportes = os.path.join(directorio_actual, "reportes")
+    
+    # Crear la carpeta si no existiera
+    os.makedirs(carpeta_reportes, exist_ok=True)
+    
+    # Guardar evidencias en bob-skill/reportes/evidencias.json
+    archivo_evidencias = os.path.join(carpeta_reportes, "evidencias.json")
     with open(archivo_evidencias, "w", encoding="utf-8") as f:
         json.dump(evidencias, f, indent=2, ensure_ascii=False)
 
-    print(f"\n[+] Pruebas completadas. Evidencias guardadas en '{archivo_evidencias}'.")
+    print(f"\n[+] Pruebas completadas exitosamente.")
+    print(f"[+] Evidencias guardadas en: {archivo_evidencias}")
     return evidencias
 
 if __name__ == "__main__":
