@@ -13,17 +13,16 @@ def saludo():
 
 @app.route('/qr/<texto>/<temporal>')
 def generaQR(texto,temporal):
-    try:
-        qr=qrcode.make(texto)
+    
+    qr=qrcode.make(texto)
 
-        img_io=BytesIO()
-        qr.save(img_io,'PNG')
-        img_io.seek(0)
+    img_io=BytesIO()
+    qr.save(img_io,'PNG')
+    img_io.seek(0)
 
-        return send_file(img_io,
+    return send_file(img_io,
                      mimetype='image/png')
-    except Exception as e:
-        return jsonify({'error':str(e)}),500
+
 @app.route("/generar_qr/<monto>/<ref>",methods=["POST"])
 
 def pross(monto,ref):
