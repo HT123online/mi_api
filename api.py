@@ -1,29 +1,61 @@
 from flask import Flask, send_from_directory,jsonify,request,send_file
 import qrcode
 from io import BytesIO
+from flasgger import Swagger
+
 
 app=Flask(__name__)
+swagger = Swagger(app)
+
 @app.route('/')
 def saludo():
     return("si lees esto es porque quiero pan con queso :v")
 
 @app.route('/qr/<texto>/<temporal>')
 def generaQR(texto,temporal):
+    try:
+        qr=qrcode.make(texto)
 
-    qr=qrcode.make(texto)
+        img_io=BytesIO()
+        qr.save(img_io,'PNG')
+        img_io.seek(0)
 
-    img_io=BytesIO()
-    qr.save(img_io,'PNG')
-    img_io.seek(0)
-
-    return send_file(img_io,
+        return send_file(img_io,
                      mimetype='image/png')
+    except Exception as e:
+        return jsonify({'error':str(e)}),500
+@app.route("/generar_qr/<monto>/<ref>",methods=["POST"])
 
-@app.route("/generar/<monto>/<ref>",methods=["POST"])
 def pross(monto,ref):
+    """
+    Generar QR con monto y referencia
+    ---
+    tags:
+      - QR Code
+    parameters:
+      - name: monto
+        in: path
+        type: number
+        required: true
+        description: Monto de la transacción
+      - name: ref
+        in: path
+        type: string
+        required: true
+        description: Referencia
+    responses:
+      200:
+        description: QR generado
+        content:
+          image/png:
+            schema:
+              type: string
+              format: binary
+    """
     data={'monto':monto,
           'compradas':ref}
     return jsonify(data)
+
 
 
 if __name__=="__main__":
